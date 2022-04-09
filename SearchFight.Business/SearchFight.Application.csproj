@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SearchFight.Model\SearchFight.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

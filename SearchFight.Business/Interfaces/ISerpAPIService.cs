@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SearchFight.Application.Interfaces
 {
-    public interface ISearchEngineAPIService
+    public interface ISerpAPIService
     {
         int TotalResultsFromSearch(string engine, string searchTerm);
     }

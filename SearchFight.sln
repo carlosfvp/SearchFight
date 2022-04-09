@@ -5,9 +5,9 @@ VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchFight", "SearchFight\SearchFight.csproj", "{FC89BBF4-A798-4EC6-8BB9-DE216BFC6176}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchFight.Business", "SearchFight.Business\SearchFight.Business.csproj", "{034D9267-82C8-4AD7-9431-1083377F0A72}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchFight.Application", "SearchFight.Business\SearchFight.Application.csproj", "{034D9267-82C8-4AD7-9431-1083377F0A72}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchFight.Model", "SearchFight.Model\SearchFight.Model.csproj", "{943FE3A4-98C2-4C00-8433-2B22F4AF5204}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchFight.Domain", "SearchFight.Model\SearchFight.Domain.csproj", "{943FE3A4-98C2-4C00-8433-2B22F4AF5204}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchFight.Infrastructure", "SearchFight.Infrastructure\SearchFight.Infrastructure.csproj", "{800F4A79-9C4D-4B00-B5BB-F71142142726}"
 EndProject

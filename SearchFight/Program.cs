@@ -4,8 +4,10 @@ using Microsoft.Extensions.Hosting;
 using SearchFight.Application.Services;
 using SearchFight.Application.Interfaces;
 using System;
+using SearchFight.Domain.Repositories;
+using SearchFight.Infrastructure;
 
-namespace SearchFight // Note: actual namespace depends on the project name.
+namespace SearchFight
 {
     internal class Program
     {
@@ -13,9 +15,11 @@ namespace SearchFight // Note: actual namespace depends on the project name.
         {
             var host = CreateHostBuilder(args).Build();
 
-            ISearchEngineService searchService = host.Services.GetService<ISearchEngineService>();
+            ISerpAPIService? searchService = host.Services.GetService<ISerpAPIService>();
 
-            searchService.TotalResultsFromSearch("java");
+            int totalResults = searchService.TotalResultsFromSearch("google", "java");
+
+            Console.WriteLine(totalResults);
 
             host.RunAsync();
         }
@@ -24,11 +28,18 @@ namespace SearchFight // Note: actual namespace depends on the project name.
             Host.CreateDefaultBuilder(args)
                 .ConfigureHostConfiguration(Builder =>
                 {
-                    Builder.AddJsonFile("appsettings.json")
-                        .AddCommandLine(args);
+                    Builder.AddJsonFile("appsettings.json");
                 })
                 .ConfigureServices((_, services) =>
-                    services//.AddHostedService<Worker>()
-                            .AddTransient<ISearchEngineService, SearchEngineBaseService>());
+                {
+                    services.AddTransient<ISerpAPIService, SerpAPIService>();
+                    services.AddTransient<ISerpAPIRepository, SerpAPIRepository>(sp => {
+                        string baseURL = _.Configuration["SearchEngineAPI:SerpApi:BaseURL"];
+                        string token = _.Configuration["SearchEngineAPI:SerpApi:Token"];
+
+                        return new SerpAPIRepository(baseURL, token);
+                    });
+                });
+                    
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SearchFight.Domain.Models.SearchEngineAPI
 {
-    public class Result
+    public class SerpAPIResult
     {
         public string SearchEngineName { get; set; }
         public int ResultCount { get; set; }
