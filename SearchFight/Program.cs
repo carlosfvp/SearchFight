@@ -1,45 +1,75 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using SearchFight.Application.Services;
 using SearchFight.Application.Interfaces;
-using System;
 using SearchFight.Domain.Repositories;
 using SearchFight.Infrastructure;
 
-namespace SearchFight
+namespace SearchFight.Console
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            var host = CreateHostBuilder(args).Build();
-
-            ISerpAPIService? searchService = host.Services.GetService<ISerpAPIService>();
-
-            int totalResults = searchService.TotalResultsFromSearch("google", "java");
-
-            Console.WriteLine(totalResults);
-
-            host.RunAsync();
+            var hostBuilder = CreateHostBuilder(args);
+            var host = hostBuilder.Build();
+            host.RunAsync().Wait();
         }
 
-        static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureHostConfiguration(Builder =>
+        static IHostBuilder CreateHostBuilder(string[] args)
+        {
+            return Host.CreateDefaultBuilder(args)
+                .ConfigureHostConfiguration(configHost =>
                 {
-                    Builder.AddJsonFile("appsettings.json");
+                    configHost.SetBasePath(Directory.GetCurrentDirectory());
+                    configHost.AddJsonFile("hostsettings.json", optional: true);
+                    configHost.AddEnvironmentVariables(prefix: "PREFIX_");
+                    configHost.AddCommandLine(args);
                 })
-                .ConfigureServices((_, services) =>
+                .ConfigureAppConfiguration((hostContext, configApp) =>
                 {
-                    services.AddTransient<ISerpAPIService, SerpAPIService>();
-                    services.AddTransient<ISerpAPIRepository, SerpAPIRepository>(sp => {
-                        string baseURL = _.Configuration["SearchEngineAPI:SerpApi:BaseURL"];
-                        string token = _.Configuration["SearchEngineAPI:SerpApi:Token"];
-
-                        return new SerpAPIRepository(baseURL, token);
-                    });
-                });
+                    configApp.AddJsonFile("appsettings.json", optional: true);
+                    configApp.AddJsonFile(
+                        $"appsettings.{hostContext.HostingEnvironment.EnvironmentName}.json",
+                        optional: true);
+                    configApp.AddEnvironmentVariables(prefix: "PREFIX_");
+                    configApp.AddCommandLine(args);
+                })
+                .ConfigureServices((builderContext, services) =>
+                {
+                    services.AddSingleton(new CommandLineArguments { Arguments = args });
+                    services.AddHostedService<SearchFightHostedService>();
+                    services.AddTransient<IRankingService, RankingService>();
                     
+                    string currentAPI = builderContext.Configuration["SearchEngineAPI:DefaultAPI"];
+
+                    if (currentAPI == "SerpApi")
+                    {
+                        services.AddTransient<ISearchEngineAPIService, SerpAPIService>();
+                        services.AddTransient<ISearchEngineAPIRepository, SerpAPIRepository>(sp =>
+                        {
+                            string baseURL = builderContext.Configuration["SearchEngineAPI:SerpApi:BaseURL"];
+                            string token = builderContext.Configuration["SearchEngineAPI:SerpApi:Token"];
+                            string[] engines = builderContext.Configuration.GetSection("SearchEngineAPI:SerpApi:Engines")
+                                .GetChildren()
+                                .Select(c => c.Value)
+                                .ToArray();
+
+                            return new SerpAPIRepository(baseURL, token, engines);
+                        });
+                    }
+                    else
+                    {
+                        throw new Exception("Using not implemented Search API");
+                    }
+                })
+                .ConfigureLogging((hostContext, configLogging) =>
+                {
+                    configLogging.AddConsole();
+                })
+                .UseConsoleLifetime();
+        }
     }
 }

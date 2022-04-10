@@ -1,21 +1,38 @@
-﻿using SearchFight.Application.Interfaces;
-using SearchFight.Domain.Models.SearchEngineAPI;
+﻿using SearchFight.Application.DTO;
+using SearchFight.Application.Interfaces;
+using SearchFight.Domain.Models.DTO.SearchEngineAPI;
 using SearchFight.Domain.Repositories;
 
 namespace SearchFight.Application.Services
 {
     public class SerpAPIService : ISerpAPIService
     {
-        ISerpAPIRepository searchEngineRepository;
-        public SerpAPIService(ISerpAPIRepository searchEngineRepository)
+        ISearchEngineAPIRepository _searchEngineRepository;
+        public SerpAPIService(ISearchEngineAPIRepository searchEngineRepository)
         {
-            this.searchEngineRepository = searchEngineRepository;
+            _searchEngineRepository = searchEngineRepository;
         }
 
-        public int TotalResultsFromSearch(string engine, string searchTerm)
+        public List<SearchAPIResultDTO> GetResultsFromSearch(string searchTerm)
         {
-            SerpAPIResult result = searchEngineRepository.GetSearchInformation(engine, searchTerm);
-            return result.ResultCount;
+            List<SearchAPIResultBase> baseResults = _searchEngineRepository.GetResultsFromAllEngines(searchTerm);
+
+            List<SearchAPIResultDTO> results = new List<SearchAPIResultDTO>();
+
+            foreach (SerpAPIResult result in baseResults)
+            {
+                results.Add(new SearchAPIResultDTO()
+                {
+                    Result = result.Result,
+                    ResultCount = result.ResultCount,
+                    SearchEngineName = result.SearchEngineName,
+                    SearchTerm = result.SearchTerm,
+                    TotalTimeTaken = result.TotalTimeTaken
+                });
+            }
+
+            return results;
         }
+
     }
 }

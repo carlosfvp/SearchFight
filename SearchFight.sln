@@ -3,18 +3,22 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchFight", "SearchFight\SearchFight.csproj", "{FC89BBF4-A798-4EC6-8BB9-DE216BFC6176}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SearchFight.Console", "SearchFight\SearchFight.Console.csproj", "{FC89BBF4-A798-4EC6-8BB9-DE216BFC6176}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchFight.Application", "SearchFight.Business\SearchFight.Application.csproj", "{034D9267-82C8-4AD7-9431-1083377F0A72}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SearchFight.Application", "SearchFight.Business\SearchFight.Application.csproj", "{034D9267-82C8-4AD7-9431-1083377F0A72}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchFight.Domain", "SearchFight.Model\SearchFight.Domain.csproj", "{943FE3A4-98C2-4C00-8433-2B22F4AF5204}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SearchFight.Domain", "SearchFight.Model\SearchFight.Domain.csproj", "{943FE3A4-98C2-4C00-8433-2B22F4AF5204}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchFight.Infrastructure", "SearchFight.Infrastructure\SearchFight.Infrastructure.csproj", "{800F4A79-9C4D-4B00-B5BB-F71142142726}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SearchFight.Infrastructure", "SearchFight.Infrastructure\SearchFight.Infrastructure.csproj", "{800F4A79-9C4D-4B00-B5BB-F71142142726}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4F9F7412-FFBB-44B3-B9A9-485013A9FBA6}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchFight.Infrastructure.Tests", "SearchFight.Infrastructure.Tests\SearchFight.Infrastructure.Tests.csproj", "{DF6188DF-7D71-4641-AA25-0C70D1932A93}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchFight.Application.Tests", "SearchFight.Application.Tests\SearchFight.Application.Tests.csproj", "{FB32BA78-E7F9-413D-9B92-0EF4BF7E0CB3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,6 +42,14 @@ Global
 		{800F4A79-9C4D-4B00-B5BB-F71142142726}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{800F4A79-9C4D-4B00-B5BB-F71142142726}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{800F4A79-9C4D-4B00-B5BB-F71142142726}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF6188DF-7D71-4641-AA25-0C70D1932A93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF6188DF-7D71-4641-AA25-0C70D1932A93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF6188DF-7D71-4641-AA25-0C70D1932A93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF6188DF-7D71-4641-AA25-0C70D1932A93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB32BA78-E7F9-413D-9B92-0EF4BF7E0CB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB32BA78-E7F9-413D-9B92-0EF4BF7E0CB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB32BA78-E7F9-413D-9B92-0EF4BF7E0CB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB32BA78-E7F9-413D-9B92-0EF4BF7E0CB3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
